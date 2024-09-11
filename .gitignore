@@ -1,0 +1,25 @@
+# Ignorar archivos generados por el compilador
+bin/
+obj/
+
+# Ignorar archivos de configuración de usuario de Visual Studio
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignorar archivos de caché de NuGet
+*.nupkg
+*.snupkg
+
+# Ignorar archivos de caché de dotnet
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Ignorar archivos de configuración específicos de IDEs
+.vscode/
+.idea/
+
+# Ignorar archivos de configuración de ReSharper
+*.DotSettings
