@@ -17,7 +17,7 @@ class BotClient
 
     public async void Postasync()
     {   
-        string token ="7341152621:AAGSDrs9anwxZ7pvR4S2ASX5qhl4Voj9zAM";
+        string token ="7348852621:AAGSDrs9anwxZ7pvR4S2ASX";
         string url = $"https://api.telegram.org/bot{token}/sendMessage?chat_id={7226331689}&text={Uri.EscapeDataString(message)}";
        
         using(HttpClient client = new HttpClient())
