@@ -1,51 +1,72 @@
 ﻿
 using System;
 using System.Diagnostics.Eventing.Reader;
+using System.Diagnostics;
+using System.ServiceProcess;
 namespace  logservice;
-class Program
+
+public class Program
 {
-    public static void Eventwatcher()
-    {
-        
-        string logquery= "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational";
-        string queryId="*[System/EventID=1149]";
-        EventLogQuery query = new EventLogQuery(logquery,PathType.LogName, queryId);
-
-        Console.WriteLine("Esperando clientes");
-
-        using(EventLogWatcher watcher = new EventLogWatcher(query))
-        {
-            watcher.EventRecordWritten+= new EventHandler<EventRecordWrittenEventArgs>(OnEventRecordWritten);
-            watcher.Enabled = true;
-            Console.ReadKey();
-        }
-
-    }
-
-         
-     public static  void OnEventRecordWritten(object? sender, EventRecordWrittenEventArgs e)
-     {
-        if(e.EventRecord !=null)
-        {
-            object   user =  e.EventRecord.Properties[0].Value;
-            object ip = e.EventRecord.Properties[2].Value;
-            DateTime time = e.EventRecord.TimeCreated.Value;
-            string message= user.ToString() +" " +ip.ToString()+" " + time.ToString();
-            Console.WriteLine("EL CLIENTE SE HA CONECTADO");
-            BotClient cliente = new BotClient(message);
-            cliente.Postasync();
-        }
-
-     }
-
-        
     
  static void Main(string[] args)
     {
 
-        Eventwatcher();
-        
+       if(Environment.UserInteractive)
+       {
+
+          var service = new Myservice();
+          service._is_start();  
+          Console.WriteLine("Presione una tecla para salir");
+          Console.ReadLine();
+          service._is_stop();
+       }
+       else
+       {
+          ServiceBase.Run(new Myservice());
+       }
     }
+}
+
+
+public class Myservice: ServiceBase
+{ 
+       // private   Timer timer1 ;
+       // private EventLog eventLog;
+        public Myservice()
+        {
+
+            ServiceName = "LogManagerService";
+            //timer1 = new Timer(OnWork,null, Timeout.Infinite, Timeout.Infinite);
+            //eventLog = new EventLog();
+        }
+
+        public void _is_start()
+        {
+            OnStart(null);
+        }
+        public void _is_stop()
+        {
+            OnStop();
+        }      
+
+
+        protected override void OnStart(string[] args)
+        {
+            base.OnStart(args);
+            //eventLog.WriteEntry("In Onstart");
+           _Watcher watcher = new _Watcher();
+            watcher.Eventwatcher();
+        }
+
+       protected override void OnStop()
+       {
+         Environment.Exit(0);
+       }
+        public void OnWork(Object? sender)
+        {
+            Console.WriteLine("Realizando una tarea");
+            
+        }
 
 
 }

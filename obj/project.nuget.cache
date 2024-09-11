@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "UywUH++JxgI=",
+  "dgSpecHash": "BJrIq7SCQ3k=",
   "success": true,
   "projectFilePath": "D:\\personal_proyecst\\logservice\\logservice.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER\\.nuget\\packages\\system.codedom\\8.0.0\\system.codedom.8.0.0.nupkg.sha512",
-    "C:\\Users\\USER\\.nuget\\packages\\system.diagnostics.eventlog\\6.0.0\\system.diagnostics.eventlog.6.0.0.nupkg.sha512",
-    "C:\\Users\\USER\\.nuget\\packages\\system.management\\8.0.0\\system.management.8.0.0.nupkg.sha512"
+    "C:\\Users\\USER\\.nuget\\packages\\system.diagnostics.eventlog\\8.0.0\\system.diagnostics.eventlog.8.0.0.nupkg.sha512",
+    "C:\\Users\\USER\\.nuget\\packages\\system.management\\8.0.0\\system.management.8.0.0.nupkg.sha512",
+    "C:\\Users\\USER\\.nuget\\packages\\system.serviceprocess.servicecontroller\\8.0.0\\system.serviceprocess.servicecontroller.8.0.0.nupkg.sha512"
   ],
   "logs": []
 }
