@@ -1,8 +1,8 @@
 ﻿
 using System;
-using System.Diagnostics.Eventing.Reader;
-using System.Diagnostics;
 using System.ServiceProcess;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 namespace  logservice;
 
 public class Program
@@ -40,6 +40,13 @@ public class Myservice: ServiceBase
             //eventLog = new EventLog();
         }
 
+        public static IHostBuilder CreateHostsBuilders(string[] args)=>
+            Host.CreateDefaultBuilder(args)
+            .ConfigureServices((context,services)=>
+            {
+                services.AddHostedService<Myremotelog>();
+            });
+        
         public void _is_start()
         {
             OnStart(null);
@@ -54,8 +61,10 @@ public class Myservice: ServiceBase
         {
             base.OnStart(args);
             //eventLog.WriteEntry("In Onstart");
-           _Watcher watcher = new _Watcher();
-            watcher.Eventwatcher();
+        //    _Watcher watcher = new _Watcher();
+        //     watcher.Eventwatcher();
+
+            CreateHostsBuilders(args).Build().Run();
         }
 
        protected override void OnStop()

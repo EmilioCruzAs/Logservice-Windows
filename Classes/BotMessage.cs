@@ -1,25 +1,29 @@
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Text;
+using System.Runtime.CompilerServices;
 
 namespace logservice;
 
-class BotClient
+
+class BotMessage
 {
-    private string  message;
+    private Uri url;
+    private string _token;    
+    private string _chat_id;
+    private float _time;
     
-    public BotClient ( string _message)
+   public BotMessage(string token, 
+   string chat_id,
+   float time)
+   {
+        _token=token;
+        _chat_id = chat_id;
+        float _time = time;
+        url = new Uri($"https://api.telegram.org/bot{_token}/sendMessage");
+   }
+
+
+
+    public async Task sendMessage()
     {
-        message =_message??"";
-         
-
-    }
-
-    public async void Postasync()
-    {   
-        string token ="7348852621:AAGSDrs9anwxZ7pvR4S2ASX";
-        string url = $"https://api.telegram.org/bot{token}/sendMessage?chat_id={7226331689}&text={Uri.EscapeDataString(message)}";
-       
         using(HttpClient client = new HttpClient())
         {
             try
@@ -39,7 +43,6 @@ class BotClient
             }
             
         }
-        
     }
 
 }

@@ -35,17 +35,16 @@ class _Watcher
     }
 
          
-     public void OnEventRecordWritten(object? sender, EventRecordWrittenEventArgs e)
+     public  void OnEventRecordWritten(object? sender, EventRecordWrittenEventArgs e)
      {
         if(e.EventRecord !=null)
         {
             object   user =  e.EventRecord.Properties[0].Value;
             object ip = e.EventRecord.Properties[2].Value;
-            DateTime time = e.EventRecord.TimeCreated.Value;
+            object time = e.EventRecord.TimeCreated.Value;
             string message= user.ToString() +" " +ip.ToString()+" " + time.ToString();
             Console.WriteLine("EL CLIENTE SE HA CONECTADO");
-            BotClient cliente = new BotClient(message);
-            cliente.Postasync();
+            
         }
 
      }
