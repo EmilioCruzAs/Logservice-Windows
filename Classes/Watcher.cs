@@ -1,36 +1,35 @@
-namespace logservice;
 using System;
 using System.Diagnostics.Eventing.Reader;
+using Microsoft.Extensions.Primitives;
+namespace logservice;
 
-class _Watcher
+class Watcher
 {
     private static string logquery;
     private static string queryId;
-    static _Watcher()
+
+    static Watcher()
     {
+       
+
         logquery= "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational";
         queryId="*[System/EventID=1149]";
 
     }
-   public  void Eventwatcher()
+    public  void Eventwatcher()
     {
-        
-        
-        
-        EventLogQuery query = new EventLogQuery(logquery,PathType.LogName, queryId);
+            
+            
+            
+            EventLogQuery query = new EventLogQuery(logquery,PathType.LogName, queryId);
 
-        Console.WriteLine("Esperando clientes");
+            Console.WriteLine("Esperando clientes");
 
-        using(EventLogWatcher watcher = new EventLogWatcher(query))
-        {
-            watcher.EventRecordWritten+= new EventHandler<EventRecordWrittenEventArgs>(OnEventRecordWritten);
-            watcher.Enabled = true;
-           
-            while (true)
+            using(EventLogWatcher watcher = new EventLogWatcher(query))
             {
-                Thread.Sleep(1000);
+                watcher.EventRecordWritten+= new EventHandler<EventRecordWrittenEventArgs>(OnEventRecordWritten);
+                watcher.Enabled = true;
             }
-        }
 
     }
 
@@ -43,7 +42,6 @@ class _Watcher
             object ip = e.EventRecord.Properties[2].Value;
             object time = e.EventRecord.TimeCreated.Value;
             string message= user.ToString() +" " +ip.ToString()+" " + time.ToString();
-            Console.WriteLine("EL CLIENTE SE HA CONECTADO");
             
         }
 

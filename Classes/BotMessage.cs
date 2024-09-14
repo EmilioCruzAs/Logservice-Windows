@@ -3,46 +3,39 @@ using System.Runtime.CompilerServices;
 namespace logservice;
 
 
-class BotMessage
+class BotMessage : IBotMessage
 {
     private Uri url;
     private string _token;    
     private string _chat_id;
+    private string _message;
     private float _time;
     
    public BotMessage(string token, 
-   string chat_id,
-   float time)
+   string chat_id, string message)
    {
         _token=token;
         _chat_id = chat_id;
-        float _time = time;
-        url = new Uri($"https://api.telegram.org/bot{_token}/sendMessage");
+        _message = message;
+        url = new Uri($"https://api.telegram.org/bot{_token}/sendMessage {_chat_id}");
    }
 
 
 
-    public async Task sendMessage()
+    public async Task SendMessageAsync(string message)
     {
-        using(HttpClient client = new HttpClient())
-        {
-            try
+        HttpClient client = new HttpClient();
+            var resquest = await client.GetAsync(url);
+            var responseContent = await resquest.Content.ReadAsStringAsync();
+            Console.WriteLine($"Respuesta del servidor: {responseContent}");
+            if(resquest.IsSuccessStatusCode)
             {
-                var resquest = await client.GetAsync(url);
-                var responseContent = await resquest.Content.ReadAsStringAsync();
-                Console.WriteLine($"Respuesta del servidor: {responseContent}");
-
-                if(resquest.IsSuccessStatusCode){Console.WriteLine("Mensaje Enviado COrrectamente");}else{Console.WriteLine($"que paso {resquest.StatusCode}");};
-
-            }catch(HttpRequestException  e)
-            {
-                Console.WriteLine(e);
-            }catch(UriFormatException e)
-            {
-                Console.WriteLine(e);
+                Console.WriteLine("Mensaje Enviado COrrectamente");}else{Console.WriteLine($"que paso {resquest.StatusCode}");
+                
             }
-            
-        }
+
+        
+        
     }
 
 }

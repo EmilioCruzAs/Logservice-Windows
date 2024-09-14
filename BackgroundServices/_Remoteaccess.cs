@@ -8,20 +8,24 @@ namespace logservice;
 
 
     class Myremotelog : BackgroundService
-{
-    
-
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-
     {
-        while (!stoppingToken.IsCancellationRequested)
+        private readonly Watcher _watcher;
+        public Myremotelog(Watcher watcher)
         {
-            
-            await Task.Delay(1000, stoppingToken);
+            _watcher = watcher;
         }
-    } 
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 
-}
+        {
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                
+                
+                await Task.Delay(1000, stoppingToken);
+            }
+        } 
+
+    }
 
 
 

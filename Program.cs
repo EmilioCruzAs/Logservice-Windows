@@ -30,14 +30,12 @@ public class Program
 
 public class Myservice: ServiceBase
 { 
-       // private   Timer timer1 ;
-       // private EventLog eventLog;
+       
         public Myservice()
         {
 
             ServiceName = "LogManagerService";
-            //timer1 = new Timer(OnWork,null, Timeout.Infinite, Timeout.Infinite);
-            //eventLog = new EventLog();
+           
         }
 
         public static IHostBuilder CreateHostsBuilders(string[] args)=>
@@ -60,9 +58,6 @@ public class Myservice: ServiceBase
         protected override void OnStart(string[] args)
         {
             base.OnStart(args);
-            //eventLog.WriteEntry("In Onstart");
-        //    _Watcher watcher = new _Watcher();
-        //     watcher.Eventwatcher();
 
             CreateHostsBuilders(args).Build().Run();
         }
@@ -71,6 +66,7 @@ public class Myservice: ServiceBase
        {
          Environment.Exit(0);
        }
+
         public void OnWork(Object? sender)
         {
             Console.WriteLine("Realizando una tarea");
