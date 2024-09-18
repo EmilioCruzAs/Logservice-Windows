@@ -42,6 +42,7 @@ public class Myservice: ServiceBase
             Host.CreateDefaultBuilder(args)
             .ConfigureServices((context,services)=>
             {
+                services.AddSingleton<Watcher>();
                 services.AddHostedService<Myremotelog>();
             });
         

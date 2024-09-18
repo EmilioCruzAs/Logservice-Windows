@@ -8,14 +8,16 @@ class Watcher
     private static string logquery;
     private static string queryId;
 
+    private static BotMessage botMessage;
     static Watcher()
     {
        
-
+        botMessage = new BotMessage("7341152621:AAEFNOjlxh7yGugbEGBokZjm2KiuZpZCBB0","7226331689");
         logquery= "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational";
         queryId="*[System/EventID=1149]";
 
     }
+
     public  void Eventwatcher()
     {
             
@@ -34,7 +36,7 @@ class Watcher
     }
 
          
-     public  void OnEventRecordWritten(object? sender, EventRecordWrittenEventArgs e)
+     public async void OnEventRecordWritten(object? sender, EventRecordWrittenEventArgs e)
      {
         if(e.EventRecord !=null)
         {
@@ -42,7 +44,7 @@ class Watcher
             object ip = e.EventRecord.Properties[2].Value;
             object time = e.EventRecord.TimeCreated.Value;
             string message= user.ToString() +" " +ip.ToString()+" " + time.ToString();
-            
+            await botMessage.SendMessageAsync(message);
         }
 
      }

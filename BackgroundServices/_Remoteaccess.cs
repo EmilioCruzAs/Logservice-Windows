@@ -17,9 +17,9 @@ namespace logservice;
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 
         {
+            _watcher.Eventwatcher();
             while (!stoppingToken.IsCancellationRequested)
             {
-                
                 
                 await Task.Delay(1000, stoppingToken);
             }
