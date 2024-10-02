@@ -12,7 +12,7 @@ class Watcher
     static Watcher()
     {
        
-        botMessage = new BotMessage("7341152621:AAEFNOjlxh7yGugbEGBokZjm2KiuZpZCBB0","7226331689");
+        botMessage = new BotMessage("TOKEN DEL BOT","ID DEL CHAT");
         logquery= "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational";
         queryId="*[System/EventID=1149]";
 
