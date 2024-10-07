@@ -1,21 +1,26 @@
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System.Runtime.CompilerServices;
 
 namespace EventManager;
 
-class BotMessage : IBotMessage
+class TelegramService : ITelegramService
 {
 
-    private string _token;    
-    private string _chat_id;
-  
-    private float _time;
-    private static  HttpClient client = new HttpClient();
+    private string? _token;    
+    private string? _chat_id;
 
-   public BotMessage(string token, 
-   string chat_id)
-   {
-        _token=token;
-        _chat_id = chat_id;
+  
+  
+    private static  HttpClient client = new HttpClient();
+ 
+   public IConfiguration Configuration { get; private set; }
+
+    public TelegramService(IConfiguration configuration)
+    {
+        Configuration = configuration;
+        _token = Configuration["TelegramServiceOptions:Token"];
+        _chat_id =Configuration["TelegramServiceOptions:ChatId"];
 
    }
 

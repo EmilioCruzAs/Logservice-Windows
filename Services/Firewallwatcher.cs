@@ -10,7 +10,7 @@ namespace EventManager;
     {
         private string logquery = "Microsoft-Windows-Windows Firewall With Advanced Security/Firewall";
         private string queryId = "*[System/EventID=2052]";
-        private readonly IBotMessage botMessage; 
+        private readonly ITelegramService? botMessage; 
 
         
 

@@ -1,22 +1,24 @@
 using System;
 using System.Diagnostics.Eventing.Reader;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Primitives;
 namespace EventManager;
 
 class RdpWatcher
 {
-    private static string logquery;
-    private static string queryId;
-    private static BotMessage botMessage;
+    private string? logquery;
+    private string? queryId;
+    private readonly ITelegramService _TelegramMessage;
+    public IConfiguration Configuration { get; private set; }
 
-
-    static RdpWatcher()
+    public RdpWatcher(ITelegramService botMessage, IConfiguration configuration)
     {
-       
-        botMessage = new BotMessage("7341152621:AAEFNOjlxh7yGugbEGBokZjm2KiuZpZCBB0", "7226331689");
+        _TelegramMessage = botMessage;
         logquery= "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational";
         queryId="*[System/EventID=1149]";
+        Configuration = configuration;
 
     }
 
@@ -24,7 +26,7 @@ class RdpWatcher
     {  
         EventLogQuery query = new EventLogQuery(logquery,PathType.LogName, queryId);
         Console.WriteLine("Esperando clientes");
-
+       
         using (EventLogWatcher watcher = new EventLogWatcher(query)) 
         {
             try
@@ -49,7 +51,7 @@ class RdpWatcher
             var ip = e.EventRecord.Properties[2].Value;
             var time = e.EventRecord.TimeCreated.Value;
             string message= user.ToString() +" " +ip.ToString()+" " + time.ToString();
-            await botMessage.SendMessageAsync(message);
+            await _TelegramMessage.SendMessageAsync(message);
         }
         
      }

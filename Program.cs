@@ -1,28 +1,29 @@
 ﻿
 using System;
 using System.ServiceProcess;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-namespace  logservice;
-
+namespace  EventManager;
 public class Program
 {
-    
- static void Main(string[] args)
-    {
+     static void Main(string[] args)
+     {
+        if (Environment.UserInteractive)
+        {
 
-       if(Environment.UserInteractive)
-       {
-
-          var service = new Myservice();
-          service._is_start();  
-          
-       }
-       else
-       {
-          ServiceBase.Run(new Myservice());
-       }
+            var service = new Myservice();
+            service._is_start();
+           
+            
+           
+        }
+        else
+        {
+            ServiceBase.Run(new Myservice());
+        }
     }
+
 }
 
 
@@ -32,34 +33,43 @@ public class Myservice: ServiceBase
         public Myservice()
         {
 
-            ServiceName = "EventsManager";
+            ServiceName = "EventManager";
            
         }
 
-        public static IHostBuilder CreateHostsBuilders(string[] args)=>
-            Host.CreateDefaultBuilder(args)
-            .ConfigureServices((context,services)=>
+      
+            
+
+    public void _is_start()
+    {
+        OnStart(null);
+    }
+    public void _is_stop()
+    {
+        OnStop();
+    }
+
+
+
+    protected override void OnStart(string[] args)
+        {
+
+       
+        Host.CreateDefaultBuilder(args)
+            .ConfigureServices((context, services) =>
             {
+                services.Configure<AppSettings>(context.Configuration.GetSection("TelegramServiceOptions"));
+                services.AddSingleton<ITelegramService, TelegramService>();
                 services.AddSingleton<RdpWatcher>();
                 services.AddHostedService<Myremotelog>();
-            });
+            }).Build().Run();
+
+        //base.OnStart(args);
+
+    
         
-        public void _is_start()
-        {
-            OnStart(null);
-        }
-        public void _is_stop()
-        {
-            OnStop();
-        }      
-
-
-        protected override void OnStart(string[] args)
-        {
-            base.OnStart(args);
-
-            CreateHostsBuilders(args).Build().Run();
-        }
+        
+    }
 
        protected override void OnStop()
        {
