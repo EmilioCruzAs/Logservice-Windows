@@ -16,9 +16,7 @@ public class Program
 
           var service = new Myservice();
           service._is_start();  
-          Console.WriteLine("Presione una tecla para salir");
-          Console.ReadLine();
-          service._is_stop();
+          
        }
        else
        {
@@ -34,7 +32,7 @@ public class Myservice: ServiceBase
         public Myservice()
         {
 
-            ServiceName = "LogManagerService";
+            ServiceName = "EventsManager";
            
         }
 
@@ -42,7 +40,7 @@ public class Myservice: ServiceBase
             Host.CreateDefaultBuilder(args)
             .ConfigureServices((context,services)=>
             {
-                services.AddSingleton<Watcher>();
+                services.AddSingleton<RdpWatcher>();
                 services.AddHostedService<Myremotelog>();
             });
         

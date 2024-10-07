@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "D:\\personal_proyecst\\logservice\\logservice.csproj": {}
+    "D:\\Services Net\\Logservice-Windows\\logservice.csproj": {}
   },
   "projects": {
-    "D:\\personal_proyecst\\logservice\\logservice.csproj": {
+    "D:\\Services Net\\Logservice-Windows\\logservice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\personal_proyecst\\logservice\\logservice.csproj",
+        "projectUniqueName": "D:\\Services Net\\Logservice-Windows\\logservice.csproj",
         "projectName": "logservice",
-        "projectPath": "D:\\personal_proyecst\\logservice\\logservice.csproj",
-        "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "D:\\personal_proyecst\\logservice\\obj\\",
+        "projectPath": "D:\\Services Net\\Logservice-Windows\\logservice.csproj",
+        "packagesPath": "C:\\Users\\00LAPSSDTI04\\.nuget\\packages\\",
+        "outputPath": "D:\\Services Net\\Logservice-Windows\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\00LAPSSDTI04\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0-windows"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -84,7 +91,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
