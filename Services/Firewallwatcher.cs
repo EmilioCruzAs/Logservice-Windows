@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace EventManager;
 
-    internal class Firewallwatcher
+    public class Firewallwatcher
     {
-        private string logquery = "Microsoft-Windows-Windows Firewall With Advanced Security/Firewall";
-        private string queryId = "*[System/EventID=2052]";
+
+        private string logquery = string.Empty;
+        private string queryId = string.Empty;
         private readonly ITelegramService? botMessage; 
 
         

@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Runtime.CompilerServices;
 
@@ -9,20 +10,20 @@ class TelegramService : ITelegramService
 
     private string? _token;    
     private string? _chat_id;
-
-  
-  
     private static  HttpClient client = new HttpClient();
- 
-   public IConfiguration Configuration { get; private set; }
+    private readonly IConfiguration Configuration; 
+    private readonly ILogger _logger;
 
-    public TelegramService(IConfiguration configuration)
+    public TelegramService(IConfiguration configuration, ILogger<TelegramService> logger)
     {
         Configuration = configuration;
-        _token = Configuration["TelegramServiceOptions:Token"];
-        _chat_id =Configuration["TelegramServiceOptions:ChatId"];
+        var Options = new TelegramServiceOptions();
+        Configuration.GetSection(Options.TelegramOptions).Bind(Options);
+        _logger = logger;
+        _token = Options.Token;
+        _chat_id = Options.ChatId;
 
-   }
+    }
 
 
 
@@ -38,15 +39,14 @@ class TelegramService : ITelegramService
                 var responseContent = await resquest.Content.ReadAsStringAsync();
                 if (resquest.IsSuccessStatusCode)
                 {
-                    Console.WriteLine("Mensaje Enviado COrrectamente");
+                    _logger.LogInformation("Mensaje envíado correctamente");
                 }
                 else
                 {
-                    Console.WriteLine($"Ha ocurrido un error {resquest.StatusCode}");
+                    _logger.LogWarning(responseContent);
 
                 }
-            }
-            catch (HttpRequestException ex) { Console.WriteLine(ex.Message); }
+            }catch (HttpRequestException ex) { _logger.LogError($"{ex}"); }
         
         }
               
