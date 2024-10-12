@@ -19,7 +19,7 @@ public class TelegramServiceOptions
 
 public class LogqueryOptions
 {
-    public string LogqueryOption = "Logquerys:Remoteaccess";
+ 
     public string logquery { get; set; } = String.Empty;
     public string QueryId { get; set; } = String.Empty;
 

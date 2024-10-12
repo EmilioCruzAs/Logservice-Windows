@@ -68,7 +68,10 @@ public class Myservice: ServiceBase
 
                services.AddSingleton<ITelegramService, TelegramService>();
                services.AddSingleton<RdpWatcher>();
+               services.AddSingleton<Firewallwatcher>();
                services.AddHostedService<RemoteaccessManager>();
+               services.AddHostedService<FirewallManager>();
+               
                
            }).Build().Run();
 

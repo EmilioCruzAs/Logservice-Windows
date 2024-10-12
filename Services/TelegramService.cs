@@ -29,7 +29,7 @@ class TelegramService : ITelegramService
 
     public async Task SendMessageAsync(string message)
     {
-        var url = new Uri($"https://api.telegram.org/bot{_token}/sendMessage?{_chat_id}&text={message}");
+        var url = new Uri($"https://api.telegram.org/bot{_token}/sendMessage?chat_id={_chat_id}&text={message}");
 
         using (client = new HttpClient()) 
         {

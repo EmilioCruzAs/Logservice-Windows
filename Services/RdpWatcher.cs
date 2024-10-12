@@ -17,25 +17,26 @@ class RdpWatcher
     private readonly ITelegramService _TelegramMessage;
     private readonly IConfiguration Configuration;
     private readonly ILogger _Logger;
+
+ 
     public RdpWatcher(ITelegramService botMessage, IConfiguration configuration, ILogger<RdpWatcher> logger)
     {
         var Logoptions = new LogqueryOptions();
         Configuration = configuration;
-        Configuration.GetSection(Logoptions.LogqueryOption).Bind(Logoptions);
+        Configuration.GetSection("Logquerys:Remoteaccess").Bind(Logoptions);
         _Logger = logger;
         _TelegramMessage = botMessage;
-        _logquery = "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational";
-        _queryId = "*[System/EventID=1149]";
-
-
+        _logquery = Logoptions.logquery;
+        _queryId = Logoptions.QueryId;
+        
     }
 
     public  void Eventwatcher()
     {
         
         EventLogQuery query = new EventLogQuery(_logquery,PathType.LogName, _queryId);
-        EventLogWatcher watcher = new EventLogWatcher(query); 
-        
+        EventLogWatcher watcher = new EventLogWatcher(query);
+        _Logger.LogInformation(_logquery + " " + _queryId);
         try
         {
            
