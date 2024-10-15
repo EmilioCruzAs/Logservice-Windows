@@ -2,6 +2,8 @@
 bin/
 obj/
 
+appsettings.json
+appsettings.Development.json
 # Ignorar archivos de configuración de usuario de Visual Studio
 *.user
 *.suo
@@ -24,4 +26,3 @@ artifacts/
 
 # Ignorar archivos de configuración de ReSharper
 *.DotSettings
-

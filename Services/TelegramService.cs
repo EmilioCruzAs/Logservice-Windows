@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 
 namespace EventManager;
@@ -23,6 +24,7 @@ class TelegramService : ITelegramService
         _token = Options.Token;
         _chat_id = Options.ChatId;
 
+
     }
 
 
@@ -43,10 +45,11 @@ class TelegramService : ITelegramService
                 }
                 else
                 {
-                    _logger.LogWarning(responseContent);
+                    _logger.LogWarning("Error al intentar mandar el mensaje correspondiente");
 
                 }
-            }catch (HttpRequestException ex) { _logger.LogError($"{ex}"); }
+            }catch (HttpRequestException ex) { _logger.LogError($"Error al hacer el request con la APi de Telegram: \n {ex.Message}"); }
+             catch (SocketException e) { _logger.LogError($"Ha ocurrido un error al intentar conectar con la APi de Telegram {e.Message}"); }
         
         }
               

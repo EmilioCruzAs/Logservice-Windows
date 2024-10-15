@@ -4,6 +4,7 @@ using System.ServiceProcess;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
 namespace  EventManager;
 public class Program
@@ -26,25 +27,19 @@ public class Program
 
 public class Myservice: ServiceBase
 { 
-       
-        public Myservice()
-        {
+     public Myservice()
+     {
+         ServiceName = "EventManager";      
+     }
 
-            ServiceName = "EventManager";
-           
-        }
-
-      
-            
-
-        public void _is_start()
-        {
-            OnStart(null);
-        }
-        public void _is_stop()
-        {
-            OnStop();
-        }
+     public void _is_start()
+     {
+         OnStart(null);
+     }
+     public void _is_stop()
+     {
+         OnStop();
+     }
 
 
 
@@ -58,10 +53,13 @@ public class Myservice: ServiceBase
                loggin.AddConsole();
 
            }).
-            ConfigureHostConfiguration(Hostconfig =>
+            ConfigureHostConfiguration( Hostconfig =>
            {
+               
                Hostconfig.SetBasePath(Directory.GetCurrentDirectory());
                Hostconfig.AddJsonFile("appsettings.json", optional:false, reloadOnChange: true);
+               Hostconfig.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
+               //Hostconfig.AddUserSecrets<Program>();
            })
            .ConfigureServices((context, services) =>
            {   

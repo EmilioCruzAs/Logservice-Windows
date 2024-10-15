@@ -36,17 +36,10 @@ class RdpWatcher
         
         EventLogQuery query = new EventLogQuery(_logquery,PathType.LogName, _queryId);
         EventLogWatcher watcher = new EventLogWatcher(query);
-        _Logger.LogInformation(_logquery + " " + _queryId);
-        try
-        {
-           
-           watcher.EventRecordWritten += new EventHandler<EventRecordWrittenEventArgs>(OnEventRecordWritten);
-           watcher.Enabled = true;
-        }
-        catch (Exception ex)
-        {
-          _Logger.LogError(ex.ToString());
-        }
+        _Logger.LogInformation($"Iniciando Monitoreo en {_logquery}");
+        watcher.EventRecordWritten += new EventHandler<EventRecordWrittenEventArgs>(OnEventRecordWritten);
+        watcher.Enabled = true;
+       
         
     }
 
@@ -55,11 +48,10 @@ class RdpWatcher
      {
         if(e.EventRecord !=null)
         {
-            var   user =  e.EventRecord.Properties[0].Value;
-            var ip = e.EventRecord.Properties[2].Value;
-            var time = e.EventRecord.TimeCreated.Value;
-            string message= user.ToString() +" " +ip.ToString()+" " + time.ToString();
-            _Logger.LogInformation($"Ingreso registrado:{message}");
+            var User = e.EventRecord.MachineName;
+            var data = e.EventRecord.FormatDescription();
+            string message= $"------EVENTMANAGER ALERT------ \n {User.ToString()} \n {data}";
+            _Logger.LogInformation($"{message}");
             await _TelegramMessage.SendMessageAsync(message);
         }
         
@@ -83,7 +75,7 @@ class RemoteaccessManager : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _watcher.Eventwatcher();
-        _logger.LogInformation("Waiting for clients");
+       
         while (!stoppingToken.IsCancellationRequested)
         {
             await Task.Delay(1000, stoppingToken);
